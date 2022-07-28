@@ -1,5 +1,6 @@
 import csv
 from chemical import Chemical 
+import ipdb 
 
 class Calculator:
 	def read_data(self):
@@ -19,3 +20,15 @@ class Calculator:
 			else:
 				products[chemical.product_name] = [chemical]
 		return products
+
+
+	def h2o2_content(self, chemicals):
+		h2o2 = None
+		for chemical in chemicals:
+			if chemical.name == 'hydrogen peroxide':
+				h2o2 = chemical
+		if h2o2 is None:
+			return 0
+		return float(h2o2.max_con)
+
+
