@@ -1,5 +1,5 @@
 # Chemical Calculator Peroxide
-  This chemical calculator peroxide allows for calculations of hydrogen peroxide content and the content(Oa) in a mixture and determines whether the mixture is classified as an Organic Peroxide based on [49 CFR 173.128(a)(4)](https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-C/part-173/subpart-D/section-173.128).
+  This chemical calculator allows for calculations of hydrogen peroxide content and the content(Oa) in a mixture and determines whether the mixture is classified as an Organic Peroxide based on [49 CFR 173.128(a)(4)](https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-C/part-173/subpart-D/section-173.128).
   
 ## Notes on cirpy Library
   cirpy library was used in this calculator to convert CAS number to [SMILES(The simplified molecular-input line-entry system)](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system) structure to quickly identify the presence of the [-o-o-] group in a species for later calculations. To install:
