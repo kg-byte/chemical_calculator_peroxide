@@ -42,3 +42,7 @@ class TestCalculator():
 		assert result_3 == 5.3
 		assert result_4 == 0.5
 
+	def test_analyze_product(self):
+		result_1 = TestCalculator.calc.analyze_product('Product 1', TestCalculator.products['Product 1'])
+		assert result_1 == 'Product 1 contains 0% hydrogen peroxide and 0.7% content(Oa); it is not an Organic Peroxide'
+

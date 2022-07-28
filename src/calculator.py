@@ -36,11 +36,11 @@ class Calculator:
 
 
 	def oa_content(self, chemicals):
+			# another exception - product 3 species #2 [alcohols c12-15] - unknown group which cirpy cannot provide mw/smile
+			# no -o-o- group in this species so does not affect calculations
 		oa_content = 0
 		for chemical in chemicals:
 			if chemical.smile is not None:
-			# another exception - product 3 species #2 [alcohols c12-15] - unknown group which cirpy cannot provide mw/smile
-			# no -o-o- group in this species so does not affect calculations
 				if 'OO' in chemical.smile:
 					# after deleting -o-o- group which is shown as 'OO' in smile structure
 					# the difference in length divided by two is the number of -o-o- present (ni)
@@ -48,7 +48,29 @@ class Calculator:
 					ni = (len(chemical.smile) - new_len)/2
 					ci = float(chemical.max_con)
 					mi = float(chemical.mw)
+					# formula in n 49 CFR 173.128(a)(4)
 					oa_content += 16 * (ni*ci/mi)
 		return round(oa_content,1)
 				
+
+
+	def analyze_product(self, product, chemical_list):
+		content_h2o2 = self.h2o2_content(chemical_list)
+		content_oa = self.oa_content(chemical_list)
+		# a product can be classified as an Organic Peroxide only when
+			# 1. h2o2 content is greater than 7%
+			# 2. h2o2 is more than 1% but no more than 7% + oa_content is greater than 0.5%
+			# 3. both h2o2 and oa content are greater than 1 % 
+		if content_h2o2 > 7.0:
+			is_peroxide = True 
+		elif content_h2o2 <= 7.0 and content_h2o2 > 1.0 and content_oa > 0.5:
+			is_peroxide = True
+		elif content_h2o2 > 1.0 and content_oa > 1.0:
+			is_peroxide = True
+		else:
+			is_peroxide = False
+		if is_peroxide == True:
+			return f'{product} contains {content_h2o2}% hydrogen peroxide and {content_oa}% content(Oa); it is an Organic Peroxide'
+		else:
+			return f'{product} contains {content_h2o2}% hydrogen peroxide and {content_oa}% content(Oa); it is not an Organic Peroxide'
 
