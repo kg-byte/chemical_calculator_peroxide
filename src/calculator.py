@@ -23,12 +23,32 @@ class Calculator:
 
 
 	def h2o2_content(self, chemicals):
-		h2o2 = None
+		content = 0 # if no h2o2 or sodium percabonate found, return 0
 		for chemical in chemicals:
+			# if species is h2o2, retrieve mass%
 			if chemical.name == 'hydrogen peroxide':
-				h2o2 = chemical
-		if h2o2 is None:
-			return 0
-		return float(h2o2.max_con)
+				content = float(chemical.max_con)
+			# handles exception sodium percarbonate (product 3, species2), which contains 32.5% h2o2 by weight
+			# Na2CO3*1.5H2O2 -> %H2O2 = (1.5*34.0147)/(1.5*34.0147+105.9888)= 0.32496
+			elif chemical.name == 'sodium percarbonate':
+				content = float(chemical.max_con)*0.325
+		return round(content,1)
 
+
+	def oa_content(self, chemicals):
+		oa_content = 0
+		for chemical in chemicals:
+			if chemical.smile is not None:
+			# another exception - product 3 species #2 [alcohols c12-15] - unknown group which cirpy cannot provide mw/smile
+			# no -o-o- group in this species so does not affect calculations
+				if 'OO' in chemical.smile:
+					# after deleting -o-o- group which is shown as 'OO' in smile structure
+					# the difference in length divided by two is the number of -o-o- present (ni)
+					new_len = len(chemical.smile.replace('OO', ''))
+					ni = (len(chemical.smile) - new_len)/2
+					ci = float(chemical.max_con)
+					mi = float(chemical.mw)
+					oa_content += 16 * (ni*ci/mi)
+		return round(oa_content,1)
+				
 

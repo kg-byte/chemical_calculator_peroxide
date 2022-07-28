@@ -25,5 +25,20 @@ class TestCalculator():
 	def test_h2o2_content(self):
 		result_1 = TestCalculator.calc.h2o2_content(TestCalculator.products['Product 1'])
 		result_2 = TestCalculator.calc.h2o2_content(TestCalculator.products['Product 2'])
+		result_3 = TestCalculator.calc.h2o2_content(TestCalculator.products['Product 3'])
+		result_4 = TestCalculator.calc.h2o2_content(TestCalculator.products['Product 4'])
 		assert result_1 == 0
 		assert result_2 == 1.8
+		assert result_3 == 11.4
+		assert result_4 == 1.0
+
+	def test_oa_content(self):
+		result_1 = TestCalculator.calc.oa_content(TestCalculator.products['Product 1'])
+		result_2 = TestCalculator.calc.oa_content(TestCalculator.products['Product 2'])
+		result_3 = TestCalculator.calc.oa_content(TestCalculator.products['Product 3'])
+		result_4 = TestCalculator.calc.oa_content(TestCalculator.products['Product 4'])
+		assert result_1 == 0.7
+		assert result_2 == 1.4
+		assert result_3 == 5.3
+		assert result_4 == 0.5
+
