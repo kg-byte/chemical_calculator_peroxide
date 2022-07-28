@@ -1,4 +1,3 @@
-# README
 # Chemical Calculator Peroxide
   This chemical calculator peroxide allows for calculations of hydrogen peroxide content and the content(Oa) in a mixture and determines whether the mixture is classified as an Organic Peroxide based on [49 CFR 173.128(a)(4)](https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-C/part-173/subpart-D/section-173.128).
   
