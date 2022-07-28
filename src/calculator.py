@@ -1,5 +1,4 @@
 import csv
-import ipdb
 from chemical import Chemical 
 
 class Calculator:
@@ -12,3 +11,11 @@ class Calculator:
 		        chemical_list.append(Chemical(ChemicalName, CAS, maxVal, ProductID))
 		return chemical_list
 
+	def generate_products(self, data):
+		products = {}
+		for chemical in data:
+			if products.__contains__(chemical.product_name):
+				products[chemical.product_name].append(chemical)
+			else:
+				products[chemical.product_name] = [chemical]
+		return products
