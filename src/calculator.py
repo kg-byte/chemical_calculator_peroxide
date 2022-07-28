@@ -41,9 +41,10 @@ class Calculator:
 		oa_content = 0
 		for chemical in chemicals:
 			if chemical.smile is not None:
-				if 'OO' in chemical.smile:
+				if 'OO' in chemical.smile and chemical.name != 'sodium percarbonate':
 					# after deleting -o-o- group which is shown as 'OO' in smile structure
 					# the difference in length divided by two is the number of -o-o- present (ni)
+					# avoid double counting sodium percarbonate which is handled in h2o2_content function
 					new_len = len(chemical.smile.replace('OO', ''))
 					ni = (len(chemical.smile) - new_len)/2
 					ci = float(chemical.max_con)
@@ -73,4 +74,12 @@ class Calculator:
 			return f'{product} contains {content_h2o2}% hydrogen peroxide and {content_oa}% content(Oa); it is an Organic Peroxide'
 		else:
 			return f'{product} contains {content_h2o2}% hydrogen peroxide and {content_oa}% content(Oa); it is not an Organic Peroxide'
+
+	def analyze_list(self):
+		data = self.read_data()
+		result = []
+		products = self.generate_products(data)
+		for product, chemical_list in products.items():
+			result.append(self.analyze_product(product, chemical_list))
+		return result
 
