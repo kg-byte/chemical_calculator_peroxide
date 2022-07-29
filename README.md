@@ -9,11 +9,11 @@
 
 ## Results
   #### Which of the provided formulated products meet the definition Organic Peroxide under CFR 173.128(a)(4)?
-   - Product 2 and Product 3 
+   - Product 3 
   #### Which of the provided formulated products do not meet the definition?
-   - Product 1 and Product 4
+   - Product 1, Product 2, and Product 4
   #### Which subsection under CFR 173.128(a)(4) was used to determine whether the product meets or does not meet the definition of an Organic Peroxide?
-   - Both subsections were used to formulate the following criteria- a product is classfied as an Organic Peroxide when its:
+   - Both subsections were used to formulate the following criteria- a product is classified as an Organic Peroxide when its:
      -  hydrogen peroxide content is greater than 7% OR
      -  hydrogen peroxide content is more than 1% and less than 7% while its content(Oa) is greater than 0.5% OR
      -  both hydrogen peroxide and content(Oa) are greater than 1 %  
@@ -21,7 +21,8 @@
    - The following 2 edge cases were discovered and addressed:
      - Product 3, Species 2 (chemical name: Alcohols, C12-15, ethoxylated) is an undefined alcohol group, for which the cirpy library did not return a usable molecular weight or SMILE structure. However, as ethoxylated alcohol groups do not contain a peroxide group[-o-o-], it does not affect the Content(Oa) calculation and this inconsistency is addressed in [Calculator.oa_content function (Line 43)](https://github.com/kg-byte/chemical_calculator_peroxide/blob/main/src/calculator.py).
       - Product 3, Species 1 (chemical name: sodium percarbonate) is a compound that contains 1.5 parts of hydrogen peroxide per 1 part of sodium carbonate. A decision was made to use a weight fraction (32.5 wt%) to convert the amount of sodium percarbonate present into hydrogen peroxide ([Calculator.h2o2_content, line 33-34](https://github.com/kg-byte/chemical_calculator_peroxide/blob/main/src/calculator.py)). To avoid duplication, sodium percabonate is no longer used when calculating content(Oa) dispite the presence of [-o-o-] group ([Calculator.oa_content, line 44](https://github.com/kg-byte/chemical_calculator_peroxide/blob/main/src/calculator.py)). 
-
+  #### Update
+      - The contribution of the [-o-o-] group has been overlooked in the initial version and this has been addressed in this branch. Due to this change, product 2 no longer meets the criteria of an Organic Compound.
 ## Git Log (8 commits in total following TDD)
   - Initial commit- create data file
   - create chemical object with properties retrieved from cirpy
@@ -31,6 +32,7 @@
   - Calculator.oa_content calculates oa percent given a list of chemical species
   - Calculator.analyze_product takes in a list of chemicals and returns its h2o2, oa content and classification
   - Calculator.analyze_list returns an array of results; modify conditional in line 44 to avoid double-counting sodium percarbonate
+  - Fixing hydrogen peroxide being accounted for in the Content(Oa) calculation oversight
 
 ## Testing
 1. Clone this repo
